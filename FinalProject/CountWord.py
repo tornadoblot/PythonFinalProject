@@ -15,6 +15,7 @@ def isExcept():
         # 종료하고 싶으면 sys.exit()함수를 이용해 종료한다
         elif n == '2':
             sys.exit()
+        # 1 또는 2 값이 아닐 경우 재 입력
         else:
             print("1 혹은 2 값을 입력해주세요")
             continue
@@ -22,46 +23,66 @@ def isExcept():
 
 # 그래프 창 그리기
 def drawWin(wordCnt):
+    # 기본 창 설정
     win = GraphWin("CountWord", 1000, 500)
     win.setBackground("lavenderblush")
     win.setCoords(-50, 550, 1050, -50)
 
+    # 중앙 설명 텍스트 설정
     mTxt = Text(Point(500, -10), "그래프창 활성화 후 아무키나 누르면 종료합니다")
     mTxt.setStyle("bold italic")
     mTxt.setSize(18)
     mTxt.setTextColor("mediumvioletred")
     mTxt.draw(win)
-    Line(Point(0, 470), Point(0, 20)).draw(win)
 
-    print(wordCnt)
+    # 왼쪽 라인 기본 설정
+    Line(Point(0, 470), Point(0, 20)).draw(win)
+    Line(Point(0, 470), Point(10, 470)).draw(win)
+    Text(Point(-10, 470), "0").draw(win)
+    Line(Point(0, 20), Point(10, 20)).draw(win)
+
+    # 그래프 그리기
     for i in range(8):
+        # x, y값 초기화
         x = 50 + 130 * i
+        y = 470 - 20 * wordCnt[i][1]
+        # 많이 등장한 단어를 텍스트로 출력
         Text(Point(x, 490), wordCnt[i][0]).draw(win)
 
-        if 470 - 20 * wordCnt[i][1] <= 20:
+        # y값이 특정 높이를 넘어섰을 때 일괄적으로 높이 설정
+        if y <= 20:
+            # 그래프 바 설정
             bar = Rectangle(Point(x - 20, 470), Point(x + 20, 20))
             bar.setWidth(0)
             bar.setFill("hotpink")
             bar.draw(win)
 
+            # 바 중간에 들어가는 텍스트 설정
             txt = Text(Point(x, 225), str(wordCnt[i][1]))
             txt.setTextColor("white")
             txt.draw(win)
 
+            # 각 바에 따른 왼쪽 기준 라인 설정
+            Line(Point(0, 20), Point(10, 20)).draw(win)
+            Text(Point(-10, 20), str(wordCnt[i][1])).draw(win)
+
         else:
-            bar = Rectangle(Point(x - 20, 470), Point(x + 20, 470 - 20 * wordCnt[i][1]))
+            # 빈도수에 따른 그래프 바 설정
+            bar = Rectangle(Point(x - 20, 470), Point(x + 20, y))
             bar.setWidth(0)
             bar.setFill("hotpink")
             bar.draw(win)
 
-            txt = Text(Point(x, 470 - 10 * wordCnt[i][1]), str(wordCnt[i][1]))
+            # 바 중간에 들어가는 텍스트 설정
+            txt = Text(Point(x, y + 10 * wordCnt[i][1]), str(wordCnt[i][1]))
             txt.setTextColor("white")
             txt.draw(win)
+            
+            # 각 바에 따른 왼쪽 기준 라인 설정
+            Line(Point(0, y), Point(10, y)).draw(win)
+            Text(Point(-10, y), str(wordCnt[i][1])).draw(win)
 
-      
-        
-
-
+    # 윈도우창에 입력이 들어왔으면 종료
     if win.getKey():
         win.close()
 
@@ -69,11 +90,10 @@ def drawWin(wordCnt):
 
 
 def main():
-    # 파일 로딩
+    # 파일 불러오기
     while True:
         try:
             fName = input("파일명을 입력해주세요 < .txt 제외 >")
-
             file = open(fName+'.txt', 'r')
             # spilit으로 단어 나누기
             text = file.read().lower().split()
@@ -88,6 +108,7 @@ def main():
             print("다음과 같은 오류가 발생했습니다", e)
             if isExcept(): continue
 
+        # 어떠한 오류도 발생하지 않았을 경우 무한루프 종료
         else: break
         
     wList = {}
@@ -100,8 +121,8 @@ def main():
     wList = sorted(wList.items(), key = lambda x: x[0])
     wList = sorted(wList, key = lambda x: x[1], reverse = True)
 
+    # 그래프창 그리기
     drawWin(sorted(wList[:8], key = lambda x: x[0]))
-
     file.close()
 
 main()
