@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>0f5a033c-233a-456b-9d95-10a4cc238cdf</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>CountWord.py</StartupFile>
+    <StartupFile>PrintName.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,7 @@
     <Compile Include="CountWord.py" />
     <Compile Include="FinalProject.py" />
     <Compile Include="graphics.py" />
+    <Compile Include="PrintName.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
