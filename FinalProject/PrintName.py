@@ -5,6 +5,7 @@ import os
 
 # 안내 사항 및 문자 입력, 화면 클리어 처리
 print("name.txt를 수정해 출력되는 문자의 형태를 변경할 수 있습니다.")
+print("1 byte 문자를 입력했을 때만 정상적으로 출력이 됩니다.")
 str_ipt = input("문자를 입력해주세요")
 os.system('cls')
 
@@ -40,6 +41,5 @@ for i in range((cnt-3)//3):
 ## 이 친구가 돌아가는 이유는?
 #for i in range(len(line[i])):
 #    print(i)
-#    cnt += 1
 
 f.close()
