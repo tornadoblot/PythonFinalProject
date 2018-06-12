@@ -24,35 +24,39 @@ def isExcept():
 # 그래프 창 그리기
 def drawWin(wordCnt):
     # 기본 창 설정
-    win = GraphWin("CountWord", 1000, 500)
+    Width = 1000
+    Height = 700
+    win = GraphWin("CountWord", Width, Height)
     win.setBackground("lavenderblush")
-    win.setCoords(-50, 550, 1050, -50)
+    win.setCoords(-50, Height + 50, Width + 50, -50)
 
     # 중앙 설명 텍스트 설정
-    mTxt = Text(Point(500, -10), "그래프창 활성화 후 아무키나 누르면 종료합니다")
+    mTxt = Text(Point(Width//2, -10), "그래프창 활성화 후 Enter키를 누르면 종료합니다")
     mTxt.setStyle("bold italic")
     mTxt.setSize(18)
     mTxt.setTextColor("mediumvioletred")
     mTxt.draw(win)
 
+    # 정렬 기준 설명 텍스트 제작    
+
     # 왼쪽 라인 기본 설정
-    Line(Point(0, 470), Point(0, 20)).draw(win)
-    Line(Point(0, 470), Point(10, 470)).draw(win)
-    Text(Point(-10, 470), "0").draw(win)
+    Line(Point(0, Height - 30), Point(0, 20)).draw(win)
+    Line(Point(0, Height - 30), Point(10, Height - 30)).draw(win)
+    Text(Point(-10, Height - 30), "0").draw(win)
     Line(Point(0, 20), Point(10, 20)).draw(win)
 
     # 그래프 그리기
     for i in range(8):
         # x, y값 초기화
         x = 50 + 130 * i
-        y = 470 - 20 * wordCnt[i][1]
+        y = Height -30 - 20 * wordCnt[i][1]
         # 많이 등장한 단어를 텍스트로 출력
-        Text(Point(x, 490), wordCnt[i][0]).draw(win)
+        Text(Point(x, Height - 10), wordCnt[i][0]).draw(win)
 
         # y값이 특정 높이를 넘어섰을 때 일괄적으로 높이 설정
         if y <= 20:
             # 그래프 바 설정
-            bar = Rectangle(Point(x - 20, 470), Point(x + 20, 20))
+            bar = Rectangle(Point(x - 20, Height - 30), Point(x + 20, 20))
             bar.setWidth(0)
             bar.setFill("hotpink")
             bar.draw(win)
@@ -68,7 +72,7 @@ def drawWin(wordCnt):
 
         else:
             # 빈도수에 따른 그래프 바 설정
-            bar = Rectangle(Point(x - 20, 470), Point(x + 20, y))
+            bar = Rectangle(Point(x - 20, Height - 30), Point(x + 20, y))
             bar.setWidth(0)
             bar.setFill("hotpink")
             bar.draw(win)
@@ -83,8 +87,12 @@ def drawWin(wordCnt):
             Text(Point(-10, y), str(wordCnt[i][1])).draw(win)
 
     # 윈도우창에 입력이 들어왔으면 종료
-    if win.getKey():
-        win.close()
+    while True:
+        if win.checkKey() == "Return":
+            break
+
+    win.close()
+        
 
 
 
